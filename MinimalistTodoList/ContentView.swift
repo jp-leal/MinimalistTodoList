@@ -15,9 +15,30 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack{
-            List((text), id: \.self){ i in
-                Text(i)
+            
+            Group{
+                if text.count <= 1 {
+                    Text("No Item")
+                } else {
+                    List  {
+                        ForEach((1...text.count-1), id: \.self) { i in
+                        Text(text[i])
+                                .contextMenu {
+                                    Button(action: {
+                                        text.remove(at: i)
+                                    }, label: {
+                                        Label("Delete", systemImage: "delete.left")
+                                    })
+                                }
+                        }
+                        
+                        
+                    }
+                }
+                
             }
+            
+      
             .navigationTitle("Notes")
             .toolbar {
                 Button(action: {
